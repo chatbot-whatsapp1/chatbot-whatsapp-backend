@@ -4,40 +4,48 @@ const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Token de verificação (use o mesmo configurado no ChatFlow e na Meta)
+// Token de verificação (o mesmo usado no ChatFlow e na Meta)
 const VERIFY_TOKEN = "mysecretkey123";
 
-// Middleware
 app.use(cors());
 app.use(bodyParser.json());
 
-// ✅ Rota de teste (ChatFlow AI espera JSON)
+// ✅ Rota de teste básica
 app.get('/', (req, res) => {
   res.json({ status: 'ok', message: 'Servidor WhatsApp Backend rodando com sucesso!' });
 });
 
-// Webhook de verificação (para Meta)
+// ✅ Webhook de verificação (Meta) e teste (ChatFlow)
 app.get('/webhook', (req, res) => {
   const mode = req.query['hub.mode'];
   const token = req.query['hub.verify_token'];
   const challenge = req.query['hub.challenge'];
 
+  // 👉 Caso seja verificação do ChatFlow AI (sem parâmetros da Meta)
+  if (!mode && !token && !challenge) {
+    return res.status(200).json({
+      success: true,
+      message: 'Webhook disponível e funcional para ChatFlow AI!'
+    });
+  }
+
+  // 👉 Caso seja verificação oficial da Meta
   if (mode && token === VERIFY_TOKEN) {
-    console.log('✅ Webhook verificado com sucesso!');
+    console.log('✅ Webhook verificado com sucesso pela Meta!');
     res.status(200).send(challenge);
   } else {
     res.sendStatus(403);
   }
 });
 
-// Webhook de mensagens recebidas
+// ✅ Webhook para mensagens recebidas
 app.post('/webhook', (req, res) => {
   const body = req.body;
   console.log('📩 Mensagem recebida:', JSON.stringify(body, null, 2));
   res.sendStatus(200);
 });
 
-// Endpoint de teste especial para ChatFlow AI
+// ✅ Endpoint de diagnóstico opcional
 app.get('/ping', (req, res) => {
   res.status(200).json({
     success: true,
