@@ -1,16 +1,19 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 3000;
 
 // Token de verificação (use o mesmo configurado no ChatFlow e na Meta)
 const VERIFY_TOKEN = "mysecretkey123";
 
+// Middleware
+app.use(cors());
 app.use(bodyParser.json());
 
 // Rota de teste
 app.get('/', (req, res) => {
-  res.send('✅ Servidor WhatsApp Backend rodando com sucesso!');
+  res.send('✅ Servidor WhatsApp Backend rodando com sucesso e com CORS habilitado!');
 });
 
 // Webhook de verificação (para Meta)
