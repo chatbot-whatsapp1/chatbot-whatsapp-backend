@@ -1,7 +1,7 @@
 {
-  "name": "chatbot-whatsapp-backend",
+  "name": "chatflow-backend-fixed",
   "version": "1.0.0",
-  "description": "Backend Node.js para integração ChatFlow AI com WhatsApp Cloud API (CORS e JSON habilitados)",
+  "description": "Backend WhatsApp ChatFlow AI corrigido",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
