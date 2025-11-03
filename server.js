@@ -37,6 +37,15 @@ app.post('/webhook', (req, res) => {
   res.sendStatus(200);
 });
 
+// Endpoint de teste especial para ChatFlow AI
+app.get('/ping', (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: 'Conexão com backend WhatsApp OK!',
+    origin: 'Render.com'
+  });
+});
+
 app.listen(port, () => {
   console.log(`🚀 Servidor rodando na porta ${port}`);
 });
