@@ -11,9 +11,9 @@ const VERIFY_TOKEN = "mysecretkey123";
 app.use(cors());
 app.use(bodyParser.json());
 
-// Rota de teste
+// ✅ Rota de teste (ChatFlow AI espera JSON)
 app.get('/', (req, res) => {
-  res.send('✅ Servidor WhatsApp Backend rodando com sucesso e com CORS habilitado!');
+  res.json({ status: 'ok', message: 'Servidor WhatsApp Backend rodando com sucesso!' });
 });
 
 // Webhook de verificação (para Meta)
